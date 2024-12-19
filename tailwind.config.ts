@@ -12,6 +12,16 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      width: {
+        board: "268px",
+        boardSM: "344px",
+        boardXL: "408px"
+      },
+      height: {
+        board: "268px",
+        boardSM: "344px",
+        boardXL: "408px"
+      }
     },
   },
   plugins: [],
