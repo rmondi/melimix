@@ -10,8 +10,6 @@ type DiceType = {
 const Dice = ( { letter, handleClick }: DiceType ) => {
 
   const { value, direction, isSelected } = letter;
-
-  console.log( direction )
   
   return (
     <div

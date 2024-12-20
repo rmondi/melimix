@@ -7,7 +7,7 @@ type MainType = {
 const Main = ( { children }: MainType ) => {
   
   return (
-    <main className="flex-grow">
+    <main className="flex-grow flex flex-col">
       { children }
     </main>
   )
