@@ -1,103 +1,61 @@
 "use client";
 
-import { useState, useEffect } from "react"
+import { useState, useContext } from "react"
+import { WordsContext } from "@/utils/context/Words";
 import { v4 as uuidv4 } from "uuid"
+
+import useShakeDices from "@/utils/hook/useShakeDices";
 
 import Loader from "./Loader";
 import Dice from "./Dice";
-
-import {
-  LetterType,
-  LettersType,
-  LettersDefault } from "@/utils/types";
+import AddWord from "./AddWord";
+import ResetWord from "./ResetWord";
+import ResetGame from "./ResetGame";
 
 const Board = () => {
 
-  const [ isLoading, setIsLoading ] = useState( true );
-  const [ dices, setDices ] = useState<LettersType>( LettersDefault );
+  const { updateWords } = useContext( WordsContext )
 
-  const diceDirection = () => {
-    
-    const randomDirection = Math.floor( Math.random() * 3 )
-    let direction = ""
+  const { isLoading, dices, updateDices } = useShakeDices();
 
-    if ( randomDirection === 0 ) {
-      direction = "0"
-    } else if ( randomDirection === 1 ) {
-      direction = "90"
-    } else if ( randomDirection === 2 ) {
-      direction = "180"
-    } else if ( randomDirection === 3 ) {
-      direction = "270"
-    }
+  const [ word, setWord ] = useState( "" )
 
-    return direction
+  const handleDiceClick = ( letter: string ) => {
+    const newWord = word + letter
+    setWord( newWord )
+  };
+
+  const handleResetWordClick = () => setWord( "" )
+
+  const handleAddWordClick = () => {
+    updateWords( word )
+    setWord( "" )
   }
 
-  const shakeDices = () => {
-    
-    /* Simulating the 16 dices of the game */
-    const defaultDices = [
-      [ 'E', 'T', 'U', 'K', 'N', 'O' ],
-      [ 'E', 'V', 'G', 'T', 'I', 'N' ],
-      [ 'D', 'E', 'C', 'A', 'M', 'P' ],
-      [ 'I', 'E', 'L', 'R', 'U', 'W' ],
-      [ 'E', 'H', 'I', 'F', 'S', 'E' ],
-      [ 'R', 'E', 'C', 'A', 'L', 'S' ],
-      [ 'E', 'N', 'T', 'D', 'O', 'S' ],
-      [ 'O', 'F', 'X', 'R', 'I', 'A' ],
-      [ 'N', 'A', 'V', 'E', 'D', 'Z' ],
-      [ 'E', 'I', 'O', 'A', 'T', 'A' ],
-      [ 'G', 'L', 'E', 'N', 'Y', 'U' ],
-      [ 'B', 'M', 'A', 'Q', 'J', 'O' ],
-      [ 'T', 'L', 'I', 'B', 'R', 'A' ],
-      [ 'S', 'P', 'U', 'L', 'T', 'E' ],
-      [ 'A', 'I', 'M', 'S', 'O', 'R' ],
-      [ 'E', 'N', 'H', 'R', 'I', 'S' ]
-    ]
-
-    /* Array to store generatedDices */
-    const generatedLetters: LettersType = []
-
-    /* Generating the 16 dices */
-    for ( let i = 0; i <= 15; i++ ) {
-      
-      const letter: LetterType = {};
-      
-      /* Selecting a number between 0 and 5 */
-      const randomNumber = Math.floor( Math.random() * 5 )
-      
-      /* Selecting the letter of each dice according to the random generated number */
-      letter.value = defaultDices[ i ][ randomNumber ]
-      letter.direction = diceDirection()
-      letter.isSelected = false
-
-      generatedLetters.push( letter )
-    }
-
-    return generatedLetters
-  }
-
-  const handleClick = ( e: React.MouseEvent<HTMLDivElement> ) => { console.log( e.target ) };
-
-  useEffect( () => {
-    const dices = shakeDices();
-    setDices( dices );
-    setIsLoading( false );
-  }, [] )
+  const handleResetClick = () => updateDices()
   
   if ( isLoading ) return <Loader />
   else return (
-    <div className="flex flex-wrap gap-1 sm:gap-2 w-board h-board sm:w-boardSM sm:h-boardSM xl:w-boardXL xl:h-boardXL box-content bg-orange-600 border-4 sm:border-8 border-solid border-orange-600">
-      {
-        dices.map( dice => (
-          <Dice
-            key={ uuidv4() }
-            letter={ dice }
-            handleClick={ handleClick }
-          />
-        ) )
-      }
+    <div className="flex flex-col items-center">
+      <div className="mb-4 px-4 h-8 lg:h-12 min-w-40 lg:min-w-60 flex justify-center items-center text-xl leading-6 font-semibold text-slate-800 bg-white">
+        { word }
+      </div>
+      <div className="flex flex-wrap gap-1 sm:gap-2 w-board h-board sm:w-boardSM sm:h-boardSM xl:w-boardXL xl:h-boardXL box-content bg-orange-600 border-4 sm:border-8 border-solid border-orange-600">
+        {
+          dices.map( dice => (
+            <Dice
+              key={ uuidv4() }
+              letter={ dice }
+              handleClick={ handleDiceClick }
+            />
+          ) )
+        }
+      </div>
+      <div className="mt-6 flex flex-wrap justify-center gap-4">
+        <AddWord handleClick={ handleAddWordClick } isActive={ word.length >=2 ? true : false  } />
+        <ResetWord handleClick={ handleResetWordClick } isActive={ word.length >=1 ? true : false } />
+        <ResetGame handleClick={ handleResetClick } />
+      </div>
     </div>
   )
 }

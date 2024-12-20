@@ -13,3 +13,11 @@ export const LetterDefault = {
 export type LettersType = LetterType[];
 
 export const LettersDefault = [ LetterDefault ];
+
+export type WordType = string;
+
+export const WordDefault: WordType = "";
+
+export type WordsType = WordType[] | [];
+
+export const WordsDefault: WordsType = [];
