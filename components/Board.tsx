@@ -12,9 +12,14 @@ import AddWord from "./AddWord";
 import ResetWord from "./ResetWord";
 import ResetGame from "./ResetGame";
 
+import _data from "../public/data.json";
+import { dataType } from "@/utils/types";
+
 const Board = () => {
 
-  const { updateWords } = useContext( WordsContext )
+  const data = _data as dataType;
+
+  const { words, updateWords, updateErrors } = useContext( WordsContext )
 
   const { isLoading, dices, updateDices } = useShakeDices();
 
@@ -28,7 +33,9 @@ const Board = () => {
   const handleResetWordClick = () => setWord( "" )
 
   const handleAddWordClick = () => {
-    updateWords( word )
+
+    if ( data.words.includes( word ) && !words.includes( word as never ) ) updateWords( word )
+    else updateErrors( word )
     setWord( "" )
   }
 
@@ -37,7 +44,7 @@ const Board = () => {
   if ( isLoading ) return <Loader />
   else return (
     <div className="flex flex-col items-center">
-      <div className="mb-4 px-4 h-8 lg:h-12 min-w-40 lg:min-w-60 flex justify-center items-center text-xl leading-6 font-semibold text-slate-800 bg-white">
+      <div className="relative mb-4 px-4 h-8 lg:h-12 flex justify-center items-center text-xl leading-6 font-semibold text-slate-800 before:content-[''] before:absolute before:bottom-0 before:right-0 before:left-0 before:h-1 before:bg-slate-400">
         { word }
       </div>
       <div className="flex flex-wrap gap-1 sm:gap-2 w-board h-board sm:w-boardSM sm:h-boardSM xl:w-boardXL xl:h-boardXL box-content bg-orange-600 border-4 sm:border-8 border-solid border-orange-600">

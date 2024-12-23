@@ -21,3 +21,7 @@ export const WordDefault: WordType = "";
 export type WordsType = WordType[] | [];
 
 export const WordsDefault: WordsType = [];
+
+export type dataType = {
+  words: string[];
+} 

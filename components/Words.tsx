@@ -4,10 +4,11 @@ import { useContext } from "react";
 import { WordsContext } from "@/utils/context/Words";
 import { v4 as uuidv4 } from "uuid";
 import Word from "./Word";
+import Error from "./Error";
 
 const Words = () => {
 
-  const { words } = useContext( WordsContext )
+  const { words, errors } = useContext( WordsContext )
   
   return (
     <>
@@ -15,6 +16,11 @@ const Words = () => {
       <div className="flex flex-wrap gap-1 mt-4">
         {
           words && words.map( word => <Word key={ uuidv4() } word={ word } /> )
+        }
+      </div>
+      <div className="flex flex-wrap gap-1 mt-4">
+        {
+          errors && errors.map( error => <Error key={ uuidv4() } word={ error } /> )
         }
       </div>
     </>

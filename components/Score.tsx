@@ -14,8 +14,6 @@ const Score = () => {
 
     const wordLength = word.length
 
-    console.log(wordLength)
-
     switch( true ) {
       case wordLength === 3:
       case wordLength === 4:
