@@ -26,7 +26,7 @@ const Board = () => {
   const [ word, setWord ] = useState( "" )
 
   /** Handle dice click */
-  const handleDiceClick = ( letter: string, index: number ) => {
+  const handleDiceClick = ( letter: string ) => {
     const newWord = word + letter
     setWord( newWord )
   };
