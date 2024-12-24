@@ -1,7 +1,6 @@
 export type LetterType = {
   value?: string;
   direction?: string;
-  isSelected?: boolean;
 };
 
 export const LetterDefault = {
@@ -21,6 +20,14 @@ export const WordDefault: WordType = "";
 export type WordsType = WordType[] | [];
 
 export const WordsDefault: WordsType = [];
+
+export type SelectedLettersType = number[] | [];
+
+export const SelectedLettersDefault = [];
+
+export type PreviousLetterType = number | null;
+
+export const PreviousLetterDefault = null;
 
 export type dataType = {
   words: string[];

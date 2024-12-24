@@ -1,14 +1,14 @@
 "use client";
 
 import { useContext } from "react";
-import { WordsContext } from "@/utils/context/Words";
+import { MelimixContext } from "@/utils/context/Melimix";
 import { v4 as uuidv4 } from "uuid";
 import Word from "./Word";
 import Error from "./Error";
 
 const Words = () => {
 
-  const { words, errors } = useContext( WordsContext )
+  const { words, errors } = useContext( MelimixContext )
   
   return (
     <>

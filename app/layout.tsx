@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
-import { WordsProvider } from "@/utils/context/Words";
+import { MelimixProvider } from "@/utils/context/Melimix";
 
 import Header from "@/components/Header";
 import Main from "@/components/Main";
@@ -25,11 +25,11 @@ export default function RootLayout({
       <body className="min-h-lvh flex flex-col bg-stone-100">
 
         <Header />
-          <WordsProvider>
+          <MelimixProvider>
             <Main>
             {children}
             </Main>
-          </WordsProvider>
+          </MelimixProvider>
         <Footer />
         <Analytics />
         <SpeedInsights />

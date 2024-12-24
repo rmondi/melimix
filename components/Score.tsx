@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect, useContext } from "react";
-import { WordsContext } from "@/utils/context/Words";
+import { MelimixContext } from "@/utils/context/Melimix";
 
 const Score = () => {
 
-  const { words } = useContext( WordsContext )
+  const { words } = useContext( MelimixContext )
 
   const [ total, setTotal ] = useState( 0 )
 

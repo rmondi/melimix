@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useContext } from "react";
-import { WordsContext } from "../context/Words";
+import { MelimixContext } from "../context/Melimix";
 
 import {
   LetterType,
@@ -10,7 +10,7 @@ import {
 
 const useShakeDices = () => {
 
-  const { resetWords } = useContext( WordsContext )
+  const { resetGame } = useContext( MelimixContext )
 
   const [ isLoading, setIsLoading ] = useState( true )
   const [ dices, setDices ] = useState<LettersType>( LettersDefault )
@@ -69,7 +69,6 @@ const useShakeDices = () => {
       /* Selecting the letter of each dice according to the random generated number */
       letter.value = defaultDices[ i ][ randomNumber ]
       letter.direction = diceDirection()
-      letter.isSelected = false
 
       generatedLetters.push( letter )
     }
@@ -78,7 +77,7 @@ const useShakeDices = () => {
   }
 
   const updateDices = () => {
-    resetWords();
+    resetGame();
 
     const dices = shakeDices()
     setDices( dices )

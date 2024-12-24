@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useContext } from "react"
-import { WordsContext } from "@/utils/context/Words";
+import { MelimixContext } from "@/utils/context/Melimix";
 import { v4 as uuidv4 } from "uuid"
 
 import useShakeDices from "@/utils/hook/useShakeDices";
@@ -19,27 +19,38 @@ const Board = () => {
 
   const data = _data as dataType;
 
-  const { words, updateWords, updateErrors } = useContext( WordsContext )
+  const { words, updateWords, updateErrors, resetSelectedLetters } = useContext( MelimixContext )
 
-  const { isLoading, dices, updateDices } = useShakeDices();
+  const { isLoading, dices, updateDices } = useShakeDices()
 
   const [ word, setWord ] = useState( "" )
 
-  const handleDiceClick = ( letter: string ) => {
+  /** Handle dice click */
+  const handleDiceClick = ( letter: string, index: number ) => {
     const newWord = word + letter
     setWord( newWord )
   };
 
-  const handleResetWordClick = () => setWord( "" )
+  /** Handle ResetWord button click */
+  const handleResetWordClick = () => {
+    setWord( "" )
+    resetSelectedLetters()
+  }
 
+  /** Handle AddWord button click */
   const handleAddWordClick = () => {
 
     if ( data.words.includes( word ) && !words.includes( word as never ) ) updateWords( word )
     else updateErrors( word )
     setWord( "" )
+    resetSelectedLetters()
   }
 
-  const handleResetClick = () => updateDices()
+  /** Handle reset game button click */
+  const handleResetClick = () => {
+    setWord( "" )
+    updateDices()
+  }
   
   if ( isLoading ) return <Loader />
   else return (
@@ -49,10 +60,11 @@ const Board = () => {
       </div>
       <div className="flex flex-wrap gap-1 sm:gap-2 w-board h-board sm:w-boardSM sm:h-boardSM xl:w-boardXL xl:h-boardXL box-content bg-orange-600 border-4 sm:border-8 border-solid border-orange-600">
         {
-          dices.map( dice => (
+          dices.map( ( dice, index ) => (
             <Dice
               key={ uuidv4() }
               letter={ dice }
+              index={ index }
               handleClick={ handleDiceClick }
             />
           ) )
