@@ -12,7 +12,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "MéLiMiX",
-  description: "MéLiMix est un jeu dont le but est de trouver des mots.",
+  description: "MéLiMix est un jeu dont le but est de trouver le plus de mots possible depuis une grille de lettres.",
 }
 
 export default function RootLayout({
