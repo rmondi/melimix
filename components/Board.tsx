@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useContext } from "react"
+import Link from "next/link";
 import { MelimixContext } from "@/utils/context/Melimix";
 import { v4 as uuidv4 } from "uuid"
 
@@ -74,6 +75,17 @@ const Board = () => {
         <AddWord handleClick={ handleAddWordClick } isActive={ word.length >=2 ? true : false  } />
         <ResetWord handleClick={ handleResetWordClick } isActive={ word.length >=1 ? true : false } />
         <ResetGame handleClick={ handleResetClick } />
+      </div>
+      <div className="mt-4">
+        <p>
+          <Link
+            className="underline text-md font-semibold text-slate-700 transition duration-300 hover:text-slate-500"
+            href="https://www.boggle.fr/regles.php"
+            target="_blank"
+          >
+            Règle du jeu
+          </Link>
+        </p>
       </div>
     </div>
   )
